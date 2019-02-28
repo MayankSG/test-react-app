@@ -5,8 +5,8 @@ class Thankyou extends React.Component {
 		return(
 			<div className="container text-center">
 					<div className="alert alert-primary">
-  						Thankyou !
-				</div>
+  						Finished <span><img src="/tick-512.png" height="20" width="20" /></span>
+					</div>
 				</div>
 			);
 	}

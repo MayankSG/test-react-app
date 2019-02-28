@@ -6,20 +6,17 @@ import axios from "axios";
 class Register extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      error: ""
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.user.token !== nextProps.user.token) {
-      this.props.history.push("/");
-    }
-  }
 
   async handleSubmit(e) {
     const email = this.refs.email.value;
     const password = this.refs.password.value;
     const passwordConfirmation = this.refs.password_confirmation.value;
-    // await this.props.RegisterUser({ name, email, password, role });
     axios.post('http://localhost:3000/users', {
     "user": {
       email: email,
@@ -28,9 +25,14 @@ class Register extends React.Component {
     }
     })
     .then(function (response) {
-      console.log(response);
-      if (response.status === 200) {
+      
+      if (response.status === 200 && response.data.id) {
+        window.localStorage.setItem('userId', response.data.id);
       this.props.history.push("/question");
+    }else{
+      this.setState({
+        error: response.data
+      });
     }
     }.bind(this))
     .catch(function (error) {
@@ -45,8 +47,10 @@ class Register extends React.Component {
           <div className="row">
             <div className="col-md-3 col-lg-3 col-sm-3 col-xs-12"></div>
             <div className="col-md-6 col-lg-6 col-sm-6 col-xs-12 login_registration_box">
-              <h1 className="text-center">Sign up</h1>
-
+              <h1 className="text-center">Sign Up</h1>
+              {this.state.error ? <div className="alert alert-danger" role="alert">
+                  <strong>{this.state.error}</strong>
+                </div> : '' }
               <label>
                 <b>Email</b>
               </label>
@@ -84,7 +88,7 @@ class Register extends React.Component {
                 onClick={this.handleSubmit}
                 className="registerbtn mt-4"
               >
-                create account
+                Submit
               </button>
               <h4>
                 Already have an account?{" "}

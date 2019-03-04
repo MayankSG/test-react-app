@@ -90,8 +90,8 @@ class Question extends React.Component {
         { this.state.data.length && this.state.data.map((question,index) => {
           if(index === this.state.next) {
             return (
-              <form>
-                <div className="container que" key={index}>
+              <form key={index}>
+                <div className="container que">
                   {this.state.error ? <div className="alert alert-danger" role="alert">
                         <strong>{this.state.error}</strong>
                       </div> : '' }

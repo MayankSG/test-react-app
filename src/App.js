@@ -10,7 +10,7 @@ class App extends Component {
   render() {
 
     const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={(props) => window.localStorage.getItem('userId') ?
+      <Route {...rest} render={(props) => window.localStorage.getItem('token') ?
       <Component {...props}/> : <Redirect to='/'/>}
       />
     );

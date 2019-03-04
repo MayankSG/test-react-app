@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
+const baseUrl = "http://localhost:5000";
 
 class Register extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Register extends React.Component {
     const email = this.refs.email.value;
     const password = this.refs.password.value;
     const passwordConfirmation = this.refs.password_confirmation.value;
-    axios.post('http://localhost:3000/users', {
+    axios.post(baseUrl+'/users', {
     "user": {
       email: email,
       password: password,
@@ -26,8 +27,8 @@ class Register extends React.Component {
     })
     .then(function (response) {
       
-      if (response.status === 200 && response.data.id) {
-        window.localStorage.setItem('userId', response.data.id);
+      if (response.status === 200 && response.data.token) {
+        window.localStorage.setItem('token', response.data.token);
       this.props.history.push("/question");
     }else{
       this.setState({

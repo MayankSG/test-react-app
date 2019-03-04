@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+const baseUrl = "http://localhost:5000";
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Login extends React.Component {
   async handleSubmit(e) {
     const email = this.refs.email.value;
     const password = this.refs.password.value;
-    axios.post('http://localhost:3000/users/sign_in', {
+    axios.post(baseUrl+'/users/sign_in', {
     "user": {
       email: email,
       password: password
@@ -28,8 +29,8 @@ class Login extends React.Component {
       this.setState({
         error: response.data
       });
-      if (response.status === 200 && response.data.id) {
-      window.localStorage.setItem('userId', response.data.id);
+      if (response.status === 200 && response.data.token) {
+      window.localStorage.setItem('token', response.data.token);
       this.props.history.push("/question");
     }
     }.bind(this))
